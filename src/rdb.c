@@ -2644,6 +2644,7 @@ int rdbLoadRio(rio *rdb, int rdbflags, rdbSaveInfo *rsi, redisDb *dbarray) {
     long long lru_idle = -1, lfu_freq = -1, expiretime = -1, now = mstime();
     long long lru_clock = LRU_CLOCK();
 
+    serverLog(LL_WARNING, "ydbg: before loading");
     while(1) {
         sds key;
         robj *val;
@@ -2911,6 +2912,7 @@ int rdbLoadRio(rio *rdb, int rdbflags, rdbSaveInfo *rsi, redisDb *dbarray) {
         lfu_freq = -1;
         lru_idle = -1;
     }
+    serverLog(LL_WARNING, "ydbg: after loading");
     /* Verify the checksum if RDB version is >= 5 */
     if (rdbver >= 5) {
         uint64_t cksum, expected = rdb->cksum;
@@ -2940,6 +2942,7 @@ int rdbLoadRio(rio *rdb, int rdbflags, rdbSaveInfo *rsi, redisDb *dbarray) {
             "Done loading RDB, keys loaded: %lld, keys expired: %lld.",
                 server.rdb_last_load_keys_loaded, server.rdb_last_load_keys_expired);
     }
+    serverLog(LL_WARNING, "ydbg: loading ok");
     return C_OK;
 
     /* Unexpected end of file is handled here calling rdbReportReadError():
