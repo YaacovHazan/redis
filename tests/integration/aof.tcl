@@ -75,19 +75,7 @@ tags {"aof external:skip"} {
 
     start_server_aof [list dir $server_path aof-load-truncated yes] {
         test "Bad format: Server should have logged an error" {
-            set pattern "*Bad file format reading the append only file*"
-            set retry 10
-            while {$retry} {
-                set result [exec tail -1 < [dict get $srv stdout]]
-                if {[string match $pattern $result]} {
-                    break
-                }
-                incr retry -1
-                after 1000
-            }
-            if {$retry == 0} {
-                error "assertion:expected error not found on config file"
-            }
+            wait_for_log_messages 0 {"*Bad file format reading the append only file*"} 0 10 1000
         }
     }
 
@@ -100,19 +88,7 @@ tags {"aof external:skip"} {
 
     start_server_aof [list dir $server_path aof-load-truncated no] {
         test "Unfinished MULTI: Server should have logged an error" {
-            set pattern "*Unexpected end of file reading the append only file*"
-            set retry 10
-            while {$retry} {
-                set result [exec tail -1 < [dict get $srv stdout]]
-                if {[string match $pattern $result]} {
-                    break
-                }
-                incr retry -1
-                after 1000
-            }
-            if {$retry == 0} {
-                error "assertion:expected error not found on config file"
-            }
+            wait_for_log_messages 0 {"*Unexpected end of file reading the append only file*"} 0 10 1000
         }
     }
 
@@ -124,19 +100,7 @@ tags {"aof external:skip"} {
 
     start_server_aof [list dir $server_path aof-load-truncated no] {
         test "Short read: Server should have logged an error" {
-            set pattern "*Unexpected end of file reading the append only file*"
-            set retry 10
-            while {$retry} {
-                set result [exec tail -1 < [dict get $srv stdout]]
-                if {[string match $pattern $result]} {
-                    break
-                }
-                incr retry -1
-                after 1000
-            }
-            if {$retry == 0} {
-                error "assertion:expected error not found on config file"
-            }
+            wait_for_log_messages 0 {"*Unexpected end of file reading the append only file*"} 0 10 1000
         }
     }
 
@@ -295,19 +259,7 @@ tags {"aof external:skip"} {
 
     start_server_aof [list dir $server_path aof-load-truncated yes] {
         test "Unknown command: Server should have logged an error" {
-            set pattern "*Unknown command 'bla' reading the append only file*"
-            set retry 10
-            while {$retry} {
-                set result [exec tail -1 < [dict get $srv stdout]]
-                if {[string match $pattern $result]} {
-                    break
-                }
-                incr retry -1
-                after 1000
-            }
-            if {$retry == 0} {
-                error "assertion:expected error not found on config file"
-            }
+            wait_for_log_messages 0 {"*Unknown command 'bla' reading the append only file*"} 0 10 1000
         }
     }
 
