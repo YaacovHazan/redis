@@ -1,6 +1,12 @@
 # Compiler settings
 CC = gcc
 
+# Install setting
+TARGET_MODULE = vset.so
+PREFIX ?= /usr/local
+INSTALL_DIR ?= $(DESTDIR)$(PREFIX)/lib/redis/modules
+INSTALL ?= install
+
 ifdef SANITIZER
 ifeq ($(SANITIZER),address)
 	SAN=-fsanitize=address
@@ -80,5 +86,11 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(TARGET) $(OBJS) *.xo *.so
 
+install: all
+	mkdir -p $(INSTALL_DIR)
+	$(INSTALL) -m 0755 -D $(TARGET_MODULE) $(INSTALL_DIR)
+
+uninstall:
+	rm -f $(INSTALL_DIR)/$(TARGET_MODULE)
 # Declare phony targets
-.PHONY: all clean
+.PHONY: all clean install
