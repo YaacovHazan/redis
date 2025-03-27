@@ -86,6 +86,8 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(TARGET) $(OBJS) *.xo *.so
 
+distclean: clean
+
 install: all
 	mkdir -p $(INSTALL_DIR)
 	$(INSTALL) -m 0755 -D $(TARGET_MODULE) $(INSTALL_DIR)
