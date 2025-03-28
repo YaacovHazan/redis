@@ -2,7 +2,7 @@
 
 SUBDIRS = src
 ifeq ($(BUILD_WITH_MODULES), yes)
-	SUBDIRS += modules
+	SUBDIRS += modules modules/vector-sets
 else
 	SUBDIRS += modules/vector-sets
 endif

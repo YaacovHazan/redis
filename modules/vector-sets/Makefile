@@ -36,9 +36,11 @@ ifeq ($(uname_S),Linux)
 	SHOBJ_LDFLAGS ?= -shared
 ifneq (,$(findstring armv,$(uname_M)))
 	SHOBJ_LDFLAGS += -latomic
+	LDFLAGS += -latomic
 endif
 ifneq (,$(findstring aarch64,$(uname_M)))
 	SHOBJ_LDFLAGS += -latomic
+	LDFLAGS += -latomic
 endif
 else
 	SHOBJ_CFLAGS ?= -W -Wall -dynamic -fno-common -g -ggdb -std=c99 -Ofast -ffast-math
