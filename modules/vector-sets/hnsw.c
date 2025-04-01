@@ -1198,7 +1198,6 @@ void hnsw_reconnect_nodes(HNSW *index, hnswNode **nodes, int count, uint32_t lay
      * and mirror it to the lower triangle. */
     assert((SIZE_MAX / (size_t)count) / sizeof(float) >= (size_t)count);
     float *distances = hmalloc((long)count * count * sizeof(float));
-    float *distances = hmalloc(count * count * sizeof(float));
     if (!distances) return;
 
     for (int i = 0; i < count; i++) {
@@ -1239,7 +1238,6 @@ void hnsw_reconnect_nodes(HNSW *index, hnswNode **nodes, int count, uint32_t lay
      * pair the other nodes. */
     assert((SIZE_MAX / (size_t)count) / sizeof(float) >= (size_t)count);
     float *scores = hmalloc((long)count * count * sizeof(float));
-    float *scores = hmalloc(count * count * sizeof(float));
     if (!scores) {
         hfree(distances);
         hfree(row_avgs);
